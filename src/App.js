@@ -1,23 +1,24 @@
-import logo from './logo.svg';
+import { selectIsConnectedToRoom, useHMSActions, useHMSStore } from '@100mslive/react-sdk';
 import './App.css';
 
-function App() {
+import JoinForm from './JoinForm';
+import { useEffect } from 'react';
+
+
+const App = () => {
+
+  const isConnected = useHMSStore(selectIsConnectedToRoom);
+  const hmsActions = useHMSActions();
+
+  useEffect(() => {
+    window.onunload = () => {
+      hmsActions.leave();
+    };
+  }, [hmsActions]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {!isConnected&&<JoinForm />}
+      {isConnected&&<div>Connected</div>}
     </div>
   );
 }
