@@ -3,6 +3,7 @@ import './App.css';
 
 import JoinForm from './JoinForm';
 import { useEffect } from 'react';
+import BridgeUI from './BridgeUI';
 
 
 const App = () => {
@@ -12,13 +13,12 @@ const App = () => {
 
   useEffect(() => {
     window.onunload = () => {
-      hmsActions.leave();
+      if (isConnected){hmsActions.leave();}  
     };
-  }, [hmsActions]);
+  }, [hmsActions, isConnected]);
   return (
     <div className="App">
-      {!isConnected&&<JoinForm />}
-      {isConnected&&<div>Connected</div>}
+      {isConnected?<BridgeUI/>:<JoinForm />}
     </div>
   );
 }
