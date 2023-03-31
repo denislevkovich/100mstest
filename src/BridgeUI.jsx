@@ -1,17 +1,20 @@
-import { selectPeers, useHMSStore } from "@100mslive/react-sdk";
+import { selectPeers, useHMSStore, useDevices, DeviceType } from "@100mslive/react-sdk";
+
+
 import React from "react";
 import PeerUI from "./PeerUI.jsx";
 
-const BridgeUI = () => {
+const BridgeUI = () => {  
   const peers = useHMSStore(selectPeers);
   return (
-    <div className="conference-section">
-      <div className="peers-container">
+
+    <div className="peers-section">
         {peers.map((peer) => (
           <PeerUI key={peer.id} peer={peer} />
         ))}
-      </div>
     </div>
+
+    
   );
 }
 
